@@ -2,10 +2,32 @@
 <html>
 	<head>
 		<title>Nick R &amp; S3</title>
-		<link type="text/css" href="./index_style.css">
+		<link type="text/css" href="https://s3-us-west-2.amazonaws.com/nick-redmond.com/index_style.css">
 	</head>
 	<body>
-		<h1>Nick Redmond does S3</h1>
-		:)
+		<style type="text/css">
+			video#lifeVideo {
+				width: 100%;
+				height: auto;
+				max-height: 550px;
+				display: none;
+			}
+		</style>
+		<span>The</span>
+		<span>Fantastic</span>
+		<span>Perspective</span>
+		<span>of</span>
+		<span>Life</span>
+		<video id="lifeVideo" width="800" height="600" autoplay controls>
+			<source src="https://drive.google.com/uc?export=download&id=0B79k8SeTAR-4SU54LU92SzZYUVk" type="video/mp4">
+		</video>
+		<button onclick="beginVideo()">Begin...</button>
 	</body>
+	<script type="text/javascript">
+		function beginVideo(){
+			var vid = document.getElementById("lifeVideo");
+			vid.style.display = "block";
+			vid.webkitRequestFullScreen();
+		}
+	</script>
 </html>
