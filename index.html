@@ -3,6 +3,7 @@
 	<head>
 		<title>Nick R &amp; S3</title>
 		<link type="text/css" href="https://s3-us-west-2.amazonaws.com/nick-redmond.com/index_style.css">
+		<link href="https://fonts.googleapis.com/css?family=Waiting+for+the+Sunrise" rel="stylesheet">
 	</head>
 	<body>
 		<style type="text/css">
@@ -12,22 +13,116 @@
 				max-height: 550px;
 				display: none;
 			}
+			.siteTitle {
+				font-family: 'Waiting for the Sunrise', cursive;
+			}
+			#titleContainer {
+				text-align: center;
+			    width: 80%;
+			    margin-left: auto;
+			    margin-right: auto;
+			}
+			#title_1 {
+				font-size: 2em;
+				display: none;
+			}
+			#title_2 {
+				font-size: 5em;
+				display: none;
+			}
+			#title_3 {
+				font-size: 4em;
+				display: none;
+			}
+			#title_4 {
+				font-size: 2em;
+				display: none;
+			}
+			#title_5 {
+				font-size: 5em;
+				font-weight: bold;
+				display: none;
+			}
+			#startButton {
+			    background-color: black;
+			    color: white;
+			    border: none;
+			    border-radius: 0.25em;
+			    font-size: 2.5em;
+			    padding: 0.25em 0.75em;
+			    margin-top: 0.5em;
+			    font-family: 'Waiting for the Sunrise', cursive;
+			    display: none;
+			    margin-left: auto;
+			    margin-right: auto;
+			    cursor: pointer;
+			}
+			#startButton:hover {
+				border: 0.08em solid black;
+				background-color: white;
+				color: black;
+				font-weight: bold;
+			}
+			body {
+				background-color: black;
+			}
 		</style>
-		<span>The</span>
-		<span>Fantastic</span>
-		<span>Perspective</span>
-		<span>of</span>
-		<span>Life</span>
+		<div id="titleContainer">
+			<div id="title_1" class="siteTitle">The</div>
+			<div id="title_2" class="siteTitle">F A N T A S T I C</div>
+			<div id="title_3" class="siteTitle">Perspective</div>
+			<div id="title_4" class="siteTitle">of</div>
+			<div id="title_5" class="siteTitle">Life</div>
+			<button id="startButton" onclick="beginVideo()">Begin...</button>
+		</div>
 		<video id="lifeVideo" width="800" height="600" autoplay controls>
 			<source src="https://drive.google.com/uc?export=download&id=0B79k8SeTAR-4SU54LU92SzZYUVk" type="video/mp4">
 		</video>
-		<button onclick="beginVideo()">Begin...</button>
 	</body>
 	<script type="text/javascript">
 		function beginVideo(){
+			["title_1", "title_2", "title_3", "title_4", "title_5",
+				"startButton"].forEach(function(id){
+					document.getElementById(id).style.display = "none";
+			});
+
 			var vid = document.getElementById("lifeVideo");
 			vid.style.display = "block";
 			vid.webkitRequestFullScreen();
+		}
+		function animateTitle(){
+			document.getElementById("title_1").style.display = "block";
+			setTimeout(function(){
+				document.getElementById("title_2").style.display = "block";
+			}, 250);
+			setTimeout(function(){
+				document.getElementById("title_3").style.display = "block";
+			}, 750);
+			setTimeout(function(){
+				document.getElementById("title_4").style.display = "block";
+			}, 1250);
+			setTimeout(function(){
+				document.getElementById("title_5").style.display = "block";
+			}, 1500);
+			setTimeout(function(){
+				document.getElementById("startButton").style.display = "block";
+			}, 1800);
+		}
+
+		window.onload = function(evt){
+			var brightness = 0;
+			var maxBrightness = 255;
+			var body = document.getElementsByTagName("body")[0];
+			var bgFade = setInterval(function(){
+				if (brightness >= maxBrightness) {
+					body.style.backgroundColor = "rgb(" + maxBrightness + ", " + maxBrightness + ", " + maxBrightness + ")";
+					clearInterval(bgFade);
+					animateTitle();
+				} else {
+					body.style.backgroundColor = "rgb(" + brightness + ", " + brightness + ", " + brightness + ")";
+					brightness += 2;
+				}
+			}, 10);
 		}
 	</script>
 </html>
