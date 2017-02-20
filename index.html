@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>Nick R &amp; S3</title>
+		<title>Life...</title>
 		<link type="text/css" href="https://s3-us-west-2.amazonaws.com/nick-redmond.com/index_style.css">
 		<link href="https://fonts.googleapis.com/css?family=Waiting+for+the+Sunrise" rel="stylesheet">
+		<link rel="icon" href="https://s3-us-west-2.amazonaws.com/nick-redmond.com/icon.png">
 	</head>
 	<body>
 		<style type="text/css">
@@ -23,27 +24,31 @@
 			    margin-right: auto;
 			}
 			#title_1 {
-				font-size: 2em;
+				font-size: 2.5em;
 				display: none;
+				font-weight: bold;
 			}
 			#title_2 {
-				font-size: 5em;
+				font-size: 6em;
 				display: none;
+				font-weight: bolder;
 			}
 			#title_3 {
-				font-size: 4em;
+				font-size: 4.5em;
 				display: none;
+				font-weight: bold;
 			}
 			#title_4 {
-				font-size: 2em;
+				font-size: 2.5em;
 				display: none;
+				font-weight: bold;
 			}
 			#title_5 {
-				font-size: 5em;
-				font-weight: bold;
+				font-size: 6em;
+				font-weight: bolder;
 				display: none;
 			}
-			#startButton {
+			.vidButton {
 			    background-color: black;
 			    color: white;
 			    border: none;
@@ -57,7 +62,7 @@
 			    margin-right: auto;
 			    cursor: pointer;
 			}
-			#startButton:hover {
+			.vidButton:hover {
 				border: 0.08em solid black;
 				background-color: white;
 				color: black;
@@ -66,6 +71,60 @@
 			body {
 				background-color: black;
 			}
+			#chapters {
+				display: none;
+			}
+			#showChapters {
+				width: 3.5em;
+			}
+			#hideChapters {
+				display: none;
+				width: 5em;
+			}
+			#chaptersContainer {
+			    padding: 0.5em;
+    			margin-top: 0.5em;
+			}
+			.videoLink {
+				font-family: "Waiting for the Sunrise", cursive;
+			    font-weight: bolder;
+			    text-decoration: underline;
+			    font-size: 1.75em;
+			    cursor: pointer;
+			    display: none;
+    			margin-left: auto;
+    			margin-right: auto;
+			}
+			.videoLink:hover {
+				text-decoration: none;
+			}
+
+			.chapterLink {
+			    color: #444;
+			    font-family: 'Waiting for the Sunrise', cursive;
+			    font-weight: bold;
+			    font-size: 1.35em;
+			    cursor: pointer;
+			}
+			.chapterLink:hover {
+				text-decoration: underline;
+			}
+
+			.chapterTitle {
+			    border-right: 0.1em solid #AAA;
+			    margin: 0.5em 0;
+			    display: block;
+			}
+			.timeListing {
+			    color: #222;
+    			font-weight: bold;
+			}
+			#chaptersTable {
+				width: 40%;
+				min-width: 400px;
+				margin-left: auto;
+				margin-right: auto;
+			}
 		</style>
 		<div id="titleContainer">
 			<div id="title_1" class="siteTitle">The</div>
@@ -73,22 +132,68 @@
 			<div id="title_3" class="siteTitle">Perspective</div>
 			<div id="title_4" class="siteTitle">of</div>
 			<div id="title_5" class="siteTitle">Life</div>
-			<button id="startButton" onclick="beginVideo()">Begin...</button>
+			<button id="startButton" class="vidButton" onclick="beginVideo()">Begin...</button>
+			<div id="chaptersContainer">
+				<a id="showChapters" class="videoLink" onclick="showChapters()">Chapters</a>
+				<a id="hideChapters" class="videoLink" onclick="hideChapters()">Hide Chapters</a>
+				<div id="chapters">
+					<table id="chaptersTable">
+						<tr>
+							<td class="chapterTitle">
+							<a class="chapterLink" onclick="beginVideo(80)">Ch. 1 - <strong>Mom</strong></a>
+							</td>
+							<td>
+							<span class="timeListing"><em>1 min. 20 sec.</em></span>
+							</td>
+						</tr>
+						<tr></tr>
+						<tr>
+						<td class="chapterTitle">
+						<a class="chapterLink" onclick="beginVideo(125)">Ch. 2 - <strong>Dad</strong></a>
+							</td>
+							<td>
+							<span class="timeListing"><em>2 min. 5 sec.</em></span>
+							</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+			<video id="lifeVideo" width="800" height="600" controls>
+				<source src="https://s3-us-west-2.amazonaws.com/nick-redmond.com/life.mp4">
+			</video>
+			<button id="backButton" class="vidButton" onclick="goBack()">&lt; Back</button>
 		</div>
-		<video id="lifeVideo" width="800" height="600" autoplay controls>
-			<source src="https://drive.google.com/uc?export=download&id=0B79k8SeTAR-4SU54LU92SzZYUVk" type="video/mp4">
-		</video>
 	</body>
 	<script type="text/javascript">
-		function beginVideo(){
+		function showChapters() {
+			document.getElementById("chapters").style.display = "block";
+			document.getElementById("showChapters").style.display = "none";
+			document.getElementById("hideChapters").style.display = "block";
+		}
+		function hideChapters() {
+			document.getElementById("chapters").style.display = "none";
+			document.getElementById("showChapters").style.display = "block";
+			document.getElementById("hideChapters").style.display = "none";
+		}
+
+		function hideTitle() {
 			["title_1", "title_2", "title_3", "title_4", "title_5",
 				"startButton"].forEach(function(id){
 					document.getElementById(id).style.display = "none";
 			});
+		}
+
+		function beginVideo(time = 0){
+			hideTitle();
 
 			var vid = document.getElementById("lifeVideo");
 			vid.style.display = "block";
 			vid.webkitRequestFullScreen();
+			vid.currentTime = time;
+			vid.play();
+
+			var backButton = document.getElementById("backButton");
+			backButton.style.display = "block";
 		}
 		function animateTitle(){
 			document.getElementById("title_1").style.display = "block";
@@ -107,6 +212,33 @@
 			setTimeout(function(){
 				document.getElementById("startButton").style.display = "block";
 			}, 1800);
+			setTimeout(function(){
+				document.getElementById("showChapters").style.display = "block";
+			}, 1800);
+		}
+
+		function goBack() {
+			hideChapters();
+			document.getElementById("showChapters").style.display = "none";
+			var vid = document.getElementById("lifeVideo");
+			vid.load();
+			vid.style.display = "none";
+			document.getElementById("backButton").style.display = "none";
+			document.getElementsByTagName("body")[0].style.backgroundColor = "rgb(0, 0, 0)";
+			var brightness = 0;
+			var maxBrightness = 255;
+			var body = document.getElementsByTagName("body")[0];
+			var bgFade = setInterval(function(){
+				if (brightness >= maxBrightness) {
+					body.style.backgroundColor = "rgb(" + maxBrightness + ", " + maxBrightness + ", " + maxBrightness + ")";
+					clearInterval(bgFade);
+					animateTitle();
+				} else {
+					body.style.backgroundColor = "rgb(" + brightness + ", " + brightness + ", " + brightness + ")";
+					brightness += 2;
+				}
+			}, 10);
+
 		}
 
 		window.onload = function(evt){
